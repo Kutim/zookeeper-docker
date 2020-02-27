@@ -2,7 +2,7 @@ FROM kutim/openjdk:8-stretch
 
 LABEL maintainer="Kutim <1252900197@qq.com>"
 
-ENV ZOOKEEPER_VERSION 3.5.7
+ENV ZOOKEEPER_VERSION 3.4.14
 
 #Download Zookeeper
 RUN cd /tmp \
