@@ -6,9 +6,9 @@ ENV ZOOKEEPER_VERSION 3.5.7
 
 #Download Zookeeper
 RUN wget -q https://mirrors.tuna.tsinghua.edu.cn/apache/zookeeper/zookeeper-${ZOOKEEPER_VERSION}/zookeeper-${ZOOKEEPER_VERSION}.tar.gz && \
-wget -q https://www.apache.org/dist/zookeeper/KEYS && \
-wget -q https://www.apache.org/dist/zookeeper/zookeeper-${ZOOKEEPER_VERSION}/zookeeper-${ZOOKEEPER_VERSION}.tar.gz.asc && \
-wget -q https://www.apache.org/dist/zookeeper/zookeeper-${ZOOKEEPER_VERSION}/zookeeper-${ZOOKEEPER_VERSION}.tar.gz.md5
+wget -q https://downloads.apache.org/zookeeper/KEYS && \
+wget -q https://downloads.apache.org/zookeeper/zookeeper-${ZOOKEEPER_VERSION}/zookeeper-${ZOOKEEPER_VERSION}.tar.gz.asc && \
+wget -q https://downloads.apache.org/zookeeper//zookeeper-${ZOOKEEPER_VERSION}/zookeeper-${ZOOKEEPER_VERSION}.tar.gz.md5
 
 #Verify download
 RUN md5sum -c zookeeper-${ZOOKEEPER_VERSION}.tar.gz.md5 && \
