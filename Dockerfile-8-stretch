@@ -6,7 +6,7 @@ ENV ZOOKEEPER_VERSION 3.5.7
 
 #Download Zookeeper
 RUN cd /tmp \
-  && wget -q https://mirrors.tuna.tsinghua.edu.cn/apache/zookeeper/zookeeper-${ZOOKEEPER_VERSION}/zookeeper-${ZOOKEEPER_VERSION}.tar.gz \
+  && wget -q https://mirrors.tuna.tsinghua.edu.cn/apache/zookeeper/zookeeper-${ZOOKEEPER_VERSION}/apache-zookeeper-${ZOOKEEPER_VERSION}.tar.gz \
   && wget -q https://downloads.apache.org/zookeeper/KEYS \
   && wget -q https://downloads.apache.org/zookeeper/zookeeper-${ZOOKEEPER_VERSION}/zookeeper-${ZOOKEEPER_VERSION}.tar.gz.asc \
   && wget -q https://downloads.apache.org/zookeeper/zookeeper-${ZOOKEEPER_VERSION}/zookeeper-${ZOOKEEPER_VERSION}.tar.gz.md5
@@ -18,7 +18,8 @@ RUN cd /tmp
   && gpg --verify zookeeper-${ZOOKEEPER_VERSION}.tar.gz.asc
 
 #Install
-RUN tar -xzf /tmp/zookeeper-${ZOOKEEPER_VERSION}.tar.gz -C /opt
+RUN tar -xzf /tmp/apache-zookeeper-${ZOOKEEPER_VERSION}.tar.gz -C /opt \
+  && mv /opt/apache-zookeeper-${ZOOKEEPER_VERSION} /opt/zookeeper-${ZOOKEEPER_VERSION}
 
 #Configure
 RUN mv /opt/zookeeper-${ZOOKEEPER_VERSION}/conf/zoo_sample.cfg /opt/zookeeper-${ZOOKEEPER_VERSION}/conf/zoo.cfg
