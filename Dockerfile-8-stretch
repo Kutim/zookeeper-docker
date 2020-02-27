@@ -5,18 +5,20 @@ LABEL maintainer="Kutim <1252900197@qq.com>"
 ENV ZOOKEEPER_VERSION 3.5.7
 
 #Download Zookeeper
-RUN wget -q https://mirrors.tuna.tsinghua.edu.cn/apache/zookeeper/zookeeper-${ZOOKEEPER_VERSION}/zookeeper-${ZOOKEEPER_VERSION}.tar.gz && \
-wget -q https://downloads.apache.org/zookeeper/KEYS && \
-wget -q https://downloads.apache.org/zookeeper/zookeeper-${ZOOKEEPER_VERSION}/zookeeper-${ZOOKEEPER_VERSION}.tar.gz.asc && \
-wget -q https://downloads.apache.org/zookeeper//zookeeper-${ZOOKEEPER_VERSION}/zookeeper-${ZOOKEEPER_VERSION}.tar.gz.md5
+RUN cd /tmp \
+  && wget -q https://mirrors.tuna.tsinghua.edu.cn/apache/zookeeper/zookeeper-${ZOOKEEPER_VERSION}/zookeeper-${ZOOKEEPER_VERSION}.tar.gz \
+  && wget -q https://downloads.apache.org/zookeeper/KEYS \
+  && wget -q https://downloads.apache.org/zookeeper/zookeeper-${ZOOKEEPER_VERSION}/zookeeper-${ZOOKEEPER_VERSION}.tar.gz.asc \
+  && wget -q https://downloads.apache.org/zookeeper/zookeeper-${ZOOKEEPER_VERSION}/zookeeper-${ZOOKEEPER_VERSION}.tar.gz.md5
 
 #Verify download
-RUN md5sum -c zookeeper-${ZOOKEEPER_VERSION}.tar.gz.md5 && \
-gpg --import KEYS && \
-gpg --verify zookeeper-${ZOOKEEPER_VERSION}.tar.gz.asc
+RUN cd /tmp
+  && md5sum -c zookeeper-${ZOOKEEPER_VERSION}.tar.gz.md5 \
+  && gpg --import KEYS \
+  && gpg --verify zookeeper-${ZOOKEEPER_VERSION}.tar.gz.asc
 
 #Install
-RUN tar -xzf zookeeper-${ZOOKEEPER_VERSION}.tar.gz -C /opt
+RUN tar -xzf /tmp/zookeeper-${ZOOKEEPER_VERSION}.tar.gz -C /opt
 
 #Configure
 RUN mv /opt/zookeeper-${ZOOKEEPER_VERSION}/conf/zoo_sample.cfg /opt/zookeeper-${ZOOKEEPER_VERSION}/conf/zoo.cfg
@@ -24,6 +26,7 @@ RUN mv /opt/zookeeper-${ZOOKEEPER_VERSION}/conf/zoo_sample.cfg /opt/zookeeper-${
 ENV JAVA_HOME /usr/local/openjdk-8/
 ENV ZK_HOME /opt/zookeeper-${ZOOKEEPER_VERSION}
 RUN sed  -i "s|/tmp/zookeeper|$ZK_HOME/data|g" $ZK_HOME/conf/zoo.cfg; mkdir $ZK_HOME/data
+RUN rm -rf /tmp/*
 
 ADD start-zk.sh /usr/bin/start-zk.sh 
 EXPOSE 2181 2888 3888
